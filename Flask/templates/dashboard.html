@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Portal CITT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .navbar { background: #667eea; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .navbar h1 { font-size: 24px; }
+        .logout { background: #e74c3c; padding: 10px 20px; border-radius: 5px; text-decoration: none; color: white; cursor: pointer; }
+        .logout:hover { background: #c0392b; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
+        .welcome { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .welcome h2 { color: #333; margin-bottom: 10px; }
+        .usuario-info { color: #666; font-size: 14px; }
+        .evento-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .evento-card h3 { color: #667eea; margin-bottom: 15px; }
+        .evento-item { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .item { padding: 10px 0; border-bottom: 1px solid #eee; }
+        .item:last-child { border-bottom: none; }
+        .item-label { color: #666; font-weight: bold; font-size: 13px; }
+        .item-value { color: #333; font-size: 18px; margin-top: 5px; }
+        .flag-section { background: #fff3cd; border: 2px solid #ffc107; padding: 20px; border-radius: 10px; margin-top: 30px; }
+        .flag-section h3 { color: #856404; margin-bottom: 10px; }
+        .flag { background: #333; color: #0f0; padding: 15px; border-radius: 5px; font-family: monospace; word-break: break-all; user-select: all; cursor: pointer; }
+        .flag:hover { background: #1a1a1a; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>🎯 Portal del Coordinador CITT</h1>
+        <a href="/logout" class="logout">Cerrar Sesión</a>
+    </div>
+    
+    <div class="container">
+        <div class="welcome">
+            <h2>¡Bienvenido, {{ usuario }}!</h2>
+            <p class="usuario-info">Rol: <strong>{{ usuario }}</strong> | Acceso: Dashboard de Eventos</p>
+        </div>
+        
+        <div class="evento-card">
+            <h3>📋 Información del Evento</h3>
+            <div class="evento-item">
+                <div class="item">
+                    <div class="item-label">Nombre del Evento</div>
+                    <div class="item-value">{{ evento.nombre }}</div>
+                </div>
+                <div class="item">
+                    <div class="item-label">Fecha</div>
+                    <div class="item-value">{{ evento.fecha }}</div>
+                </div>
+                <div class="item">
+                    <div class="item-label">Ubicación</div>
+                    <div class="item-value">{{ evento.lugar }}</div>
+                </div>
+                <div class="item">
+                    <div class="item-label">Participantes</div>
+                    <div class="item-value">{{ evento.participantes }}</div>
+                </div>
+                <div class="item">
+                    <div class="item-label">Equipos</div>
+                    <div class="item-value">{{ evento.equipos }}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flag-section">
+            <h3>🚩 Flag Capturada</h3>
+            <p style="margin-bottom: 10px; color: #666;">¡Has obtenido acceso exitosamente! Aquí está tu recompensa:</p>
+            <div class="flag">{{ evento.flag }}</div>
+            <p style="margin-top: 10px; font-size: 13px; color: #666;">*Selecciona y copia el texto para enviar como solución*</p>
+        </div>
+    </div>
+</body>
+</html>

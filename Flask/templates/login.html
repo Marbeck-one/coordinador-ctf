@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Portal del Coordinador CITT</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            font-family: 'Cinzel', serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(224, 224, 224, 0.03) 0px, transparent 1px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 3px solid #00d4ff;
+            padding-bottom: 30px;
+        }
+        .logo {
+            font-size: 3.5em;
+            font-weight: 700;
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+        .subtitle {
+            font-size: 1.3em;
+            color: #a0a0a0;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        .chamber-card {
+            background: rgba(20, 30, 50, 0.7);
+            border: 2px solid #00d4ff;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .chamber-title {
+            font-size: 2em;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+        }
+        .chamber-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 20px;
+            color: #c0c0c0;
+        }
+        .oracle-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(30, 60, 100, 0.3) 100%);
+            border: 2px solid #00d4ff;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+        .oracle-title {
+            color: #00d4ff;
+            font-size: 1.5em;
+            text-align: center;
+            margin: 20px 0 25px 0;
+            font-weight: 600;
+        }
+        .oracle-message {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #00d4ff;
+            color: #e8e8e8;
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+        .warning-box {
+            background: rgba(255, 100, 0, 0.15);
+            border-left: 5px solid #ff6400;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        .warning-title {
+            color: #ff8c42;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .instruction {
+            color: #e8e8e8;
+            font-size: 1.05em;
+            margin: 15px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        .instruction::before {
+            content: '🔑';
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+        }
+        .credentials-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px dashed #00d4ff;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .credential-item {
+            margin: 12px 0;
+            padding: 10px;
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 3px solid #00d4ff;
+            border-radius: 4px;
+        }
+        .user-label {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+        .pass-label {
+            color: #ff8c42;
+            font-weight: bold;
+        }
+        .glow-text {
+            animation: text-glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes text-glow {
+            from { text-shadow: 0 0 5px #00d4ff; }
+            to { text-shadow: 0 0 15px #00d4ff, 0 0 25px #0066cc; }
+        }
+        .tools-section {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid #00d4ff;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+        .tool-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(20, 30, 50, 0.8);
+            border-left: 4px solid #ff8c42;
+            border-radius: 5px;
+        }
+        .tool-name {
+            color: #00d4ff;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .scroll-section {
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px dashed #00d4ff;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #00d4ff;
+            color: #606060;
+            font-size: 0.9em;
+        }
+        .pyramid-symbol {
+            text-align: center;
+            font-size: 3em;
+            color: #00d4ff;
+            margin: 30px 0;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .method-selector {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid #00d4ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .method-option {
+            background: rgba(20, 30, 50, 0.8);
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #ff8c42;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .method-option:hover {
+            background: rgba(20, 30, 50, 0.9);
+            border-left: 4px solid #00d4ff;
+        }
+        .secret-hint {
+            opacity: 0.3;
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 40px;
+            color: #505050;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">⊕ ChronosCTF 2025 ⊕</div>
+            <div class="subtitle">El Pilar de Osiris - La Autenticación Débil</div>
+        </header>
+
+        <main>
+            <div class="chamber-card">
+                <h1 class="chamber-title">🔐 El Portal del Coordinador CITT 🔐</h1>
+                
+                <div class="chamber-text">
+                    Bienvenido, audaz Guardián. Se te presenta un nuevo desafío en las cámaras del 
+                    <strong>Pilar de Osiris</strong>. Este templo digital, diseñado para gestionar los eventos 
+                    más importantes de la CITT, guarda un secreto: fue construido con puertas débiles.
+                </div>
+
+                <div class="pyramid-symbol">🔑</div>
+
+                <div class="chamber-text">
+                    El Coordinador CITT confiaba en que sus credenciales eran seguras, pero cometió un error fatal: 
+                    eligió contraseñas que cualquier mortal podría adivinar. Ahora, la puerta al portal permanece 
+                    entreabierta, esperando a quien tenga el ingenio de probar las combinaciones correctas.
+                </div>
+
+                <div class="oracle-box">
+                    <div class="oracle-title">📜 Mensaje del Oráculo de Chronos</div>
+                    <div class="oracle-message">
+                        Escucha bien, Guardián. Este desafío te enseñará una de las lecciones más antiguas de la seguridad: 
+                        las <span class="glow-text">credenciales débiles</span> son como cerraduras rotas en un templo de oro.
+                        <br><br>
+                        Se conocen tres guardianes del portal:
+                        <strong>admin</strong>, <strong>manager</strong> y <strong>coordinator</strong>.
+                        Cada uno protege su entrada con una contraseña... pero demasiado fácil de predecir.
+                        <br><br>
+                        Tu tarea: encontrar el usuario correcto y su contraseña, acceder al dashboard y capturar 
+                        la bandera que guarda el conocimiento ancestral.
+                    </div>
+                </div>
+
+                <div class="credentials-box">
+                    <div style="color: #00d4ff; margin-bottom: 20px; font-weight: bold;">
+                        🔓 Credenciales Conocidas del Sistema:
+                    </div>
+                    <div class="credential-item">
+                        <div><span class="user-label">Usuario:</span> admin</div>
+                        <div><span class="pass-label">Contraseña:</span> 1234</div>
+                    </div>
+                    <div class="credential-item">
+                        <div><span class="user-label">Usuario:</span> manager</div>
+                        <div><span class="pass-label">Contraseña:</span> @sTrid952!</div>
+                    </div>
+                    <div class="credential-item">
+                        <div><span class="user-label">Usuario:</span> coordinator</div>
+                        <div><span class="pass-label">Contraseña:</span> Hol@_soy_un@_ClaVe</div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Tu Misión</div>
+                    <p style="color: #e8e8e8; margin-bottom: 15px;">
+                        Accede al portal en http://localhost:5000 (o la IP del servidor) y realiza lo siguiente:
+                    </p>
+                    <ol style="margin-left: 20px; color: #c0c0c0;">
+                        <li style="margin: 12px 0;">
+                            <strong>Reconocimiento:</strong> Observa el formulario de login y sus características.
+                        </li>
+                        <li style="margin: 12px 0;">
+                            <strong>Autenticación:</strong> Prueba las credenciales conocidas hasta encontrar acceso válido.
+                        </li>
+                        <li style="margin: 12px 0;">
+                            <strong>Exfiltración:</strong> Una vez dentro del dashboard, captura la bandera que se muestra.
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="scroll-section">
+                    <h3 style="color: #00d4ff; margin-bottom: 20px;">📋 Guía del Guardián - Métodos de Ataque</h3>
+                    
+                    <div class="method-selector">
+                        <div style="color: #00d4ff; margin-bottom: 15px; font-weight: bold;">
+                            Elige tu camino de infiltración:
+                        </div>
+
+                        <div class="method-option">
+                            <div class="tool-name">🌐 Método 1: Navegador Web (Más Simple)</div>
+                            <p style="color: #c0c0c0; margin-top: 10px; font-size: 0.95em;">
+                                Accede directamente a http://localhost:5000/login y prueba manualmente cada combinación 
+                                de usuario/contraseña. Observa la respuesta del servidor. Este es el método más directo.
+                            </p>
+                        </div>
+
+                        <div class="method-option">
+                            <div class="tool-name">💻 Método 2: Terminal con curl</div>
+                            <p style="color: #c0c0c0; margin-top: 10px; font-size: 0.95em;">
+                                Usa la herramienta de línea de comandos curl para automatizar las pruebas. 
+                                Ideal para aprender sobre HTTP y automatización básica.
+                            </p>
+                        </div>
+
+                        <div class="method-option">
+                            <div class="tool-name">🎯 Método 3: Burp Suite Intruder</div>
+                            <p style="color: #c0c0c0; margin-top: 10px; font-size: 0.95em;">
+                                Herramienta profesional de testing. Captura la petición POST, configura payloads 
+                                y ejecuta un ataque de fuerza bruta coordinado.
+                            </p>
+                        </div>
+
+                        <div class="method-option">
+                            <div class="tool-name">🐍 Método 4: Python Script</div>
+                            <p style="color: #c0c0c0; margin-top: 10px; font-size: 0.95em;">
+                                Escribir un script Python con requests para automatizar el ataque. 
+                                Mejor para entender lógica de programación y seguridad.
+                            </p>
+                        </div>
+
+                        <div class="method-option">
+                            <div class="tool-name">⚔️ Método 5: Hydra (Fuerza Bruta Profesional)</div>
+                            <p style="color: #c0c0c0; margin-top: 10px; font-size: 0.95em;">
+                                Herramienta especializada en ataques de fuerza bruta. Comando único, resultados inmediatos.
+                                Usada por profesionales de seguridad.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tools-section">
+                    <h3 style="color: #00d4ff; margin-bottom: 20px; text-align: center;">🔧 Herramientas del Arqueólogo Cibernético</h3>
+                    
+                    <div class="tool-item">
+                        <div class="tool-name">1. Navegador Web</div>
+                        <p style="color: #a0a0a0; margin-top: 8px;">
+                            Cualquier navegador (Chrome, Firefox, Edge). Presiona F12 para acceder a desarrollador.
+                        </p>
+                    </div>
+
+                    <div class="tool-item">
+                        <div class="tool-name">2. curl</div>
+                        <p style="color: #a0a0a0; margin-top: 8px;">
+                            Pre-instalado en Linux/macOS. En Windows, descargar de curl.se o usar WSL.
+                        </p>
+                    </div>
+
+                    <div class="tool-item">
+                        <div class="tool-name">3. Burp Suite Community</div>
+                        <p style="color: #a0a0a0; margin-top: 8px;">
+                            Descarga gratuita en portswigger.net/burp. Requiere Java.
+                        </p>
+                    </div>
+
+                    <div class="tool-item">
+                        <div class="tool-name">4. Python 3 + requests</div>
+                        <p style="color: #a0a0a0; margin-top: 8px;">
+                            Instalar con: pip install requests
+                        </p>
+                    </div>
+
+                    <div class="tool-item">
+                        <div class="tool-name">5. Hydra</div>
+                        <p style="color: #a0a0a0; margin-top: 8px;">
+                            En Linux: sudo apt install hydra. En otros OS: descarga en thc.org/thc-hydra
+                        </p>
+                    </div>
+                </div>
+
+                <div class="oracle-box">
+                    <div class="oracle-title">📚 Conceptos de Seguridad</div>
+                    <div class="oracle-message">
+                        <strong>Autenticación Débil:</strong> Ocurre cuando las credenciales son predecibles o fáciles de adivinar.
+                        <br><br>
+                        <strong>OWASP A07:2021:</strong> "Identification and Authentication Failures" - Una de las 10 vulnerabilidades 
+                        más críticas en aplicaciones web.
+                        <br><br>
+                        <strong>Fuerza Bruta:</strong> Técnica que prueba múltiples combinaciones automáticamente hasta encontrar 
+                        la combinación correcta.
+                        <br><br>
+                        <strong>Rate Limiting:</strong> Protección contra ataques de fuerza bruta limitando intentos por tiempo.
+                        Este portal NO tiene esta protección (intencional para este desafío educativo).
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">💡 Consejos para Resolver</div>
+                    <p style="color: #e8e8e8; margin-bottom: 15px;">
+                        ✓ Empieza con el método más simple (navegador) <br>
+                        ✓ Si ese no funciona, prueba con curl <br>
+                        ✓ Una vez que lo domines, intenta automatización <br>
+                        ✓ El objetivo es aprender, no solo ganar puntos <br>
+                        ✓ Todos los métodos llevan a la misma solución
+                    </p>
+                </div>
+
+                <div class="chamber-text" style="text-align: center; margin-top: 40px; font-size: 1.2em; color: #00d4ff;">
+                    La puerta está abierta. ¿Tienes el ingenio para atravesarla?
+                </div>
+            </div>
+
+            <footer>
+                <p>🔐 El Portal del Coordinador CITT © ChronosCTF 2025</p>
+                <p style="margin-top: 10px; color: #505050;">
+                    "Las credenciales débiles son como puertas sin cerrojos en un templo de oro"
+                </p>
+                <p style="margin-top: 15px; font-size: 0.8em; color: #404040;">
+                    La Orden Chronos · SADI © 2025 | Pilar de Osiris - Desafío de Autenticación
+                </p>
+            </footer>
+
+            <div class="secret-hint">
+                💀 El servidor corre en puerto 5000. Las credenciales están aquí arriba. Solo necesitas intentar.
+            </div>
+        </main>
+    </div>
+</body>
+</html>
